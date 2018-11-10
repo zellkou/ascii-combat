@@ -11,7 +11,7 @@ initial_dmg = 0
 
 # Constants
 # This is the list of tags to be displayed in inventory
-INVENTORY_TAGS = ['food', 'weapon', 'armor'] 
+INVENTORY_TAGS = ['food', 'weapon', 'armor']
 
 # Text constants
 BULLET = '  > '
@@ -54,7 +54,7 @@ TAG = 'tag' # Tags can be food, weapon, random, decor
 # DATA DICTIONARIES
 MONSTER_VARIATION = ['Ruthless', 'Ferocious', 'Demonic',
                      'Brutal', 'Bloody', 'Violent', 'Wild', 'Spooky',
-                     'Murderous', 'Fierce', 'Savage', 'Monsterous', 
+                     'Murderous', 'Fierce', 'Savage', 'Monsterous',
                      'Hideous', 'Grotesque',
                     ]
 

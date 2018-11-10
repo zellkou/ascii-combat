@@ -59,7 +59,7 @@ class Combat(cmd.Cmd):
         self.display()
         print(C.Fore.RED + '{}{} <{}>{}'.format(self.PROMPT_SIGN, self.STRINGS['syntax_error'], line, C.Back.BLACK))
         print(C.Fore.WHITE, end='')
-    
+
     # Removes the help method
     def do_help(self, arg):
         self.display()
@@ -79,7 +79,7 @@ class Combat(cmd.Cmd):
         # Changes prompt if Skill is available to use
         if self.user.skill == self.user.max_skill:
             self.prompt = self.PROMPT_SIGN + self.STRINGS['prompt_skl']
-        else: 
+        else:
             self.prompt = self.PROMPT_SIGN + self.STRINGS['prompt']
 
     # Pre/Post Loop functions
@@ -122,7 +122,7 @@ class Combat(cmd.Cmd):
     def enemy_death_msg(self, enemy, dmg_taken):
         if (enemy.hp - dmg_taken) <= 0:
             # Message if enemy is dead
-            outcome = "\n{}{}{} {}{}".format(C.Style.BRIGHT + C.Back.BLACK + C.Fore.RED, 
+            outcome = "\n{}{}{} {}{}".format(C.Style.BRIGHT + C.Back.BLACK + C.Fore.RED,
             self.PROMPT_SIGN, self.STRINGS['enemy_death'], enemy.name, C.Back.BLACK)
         else:
             outcome = ''
@@ -174,7 +174,7 @@ class Combat(cmd.Cmd):
             messages += '{}You survived enemy attacks with {}/{} HP left{}'.format(self.PROMPT_SIGN, self.user.hp, self.user.max_hp, C.Back.BLACK)
         self.enemies_attack_msg = messages
 
-    # UTILITY FUNCTIONS   
+    # UTILITY FUNCTIONS
     # Displays the interface: All Enemies and user status
     def display(self, clear = True):
         if clear:
@@ -186,10 +186,10 @@ class Combat(cmd.Cmd):
                 print(C.Style.BRIGHT + C.Back.BLACK + C.Fore.RED + enemy.show())
             else:
                 print(C.Style.DIM + C.Back.BLACK + C.Fore.RED + enemy.show())
-        print(self.user_attack_msg) 
+        print(self.user_attack_msg)
         print(self.enemies_attack_msg)
         print(C.Style.BRIGHT + C.Back.BLACK + C.Fore.WHITE)
-         
+
     # Clears the terminal using the approperiate subshell command
     # for each terminal
     @staticmethod
@@ -199,11 +199,11 @@ class Combat(cmd.Cmd):
             os.system('cls')
         elif platform.system() == 'Linux' or platform.system() == 'Darwin':
             os.system('clear')
-    
+
     # A wrapper for printing a RED error message
     def error_msg(self, text):
         self.display()
-        print(C.Fore.RED + 
+        print(C.Fore.RED +
         self.PROMPT_SIGN + text +
         C.Fore.WHITE)
 
@@ -224,7 +224,7 @@ class Combat(cmd.Cmd):
                 print(C.Fore.RED, end='')
                 input(self.PROMPT_SIGN + self.STRINGS['unknown_enemy'])
                 self.display()
-                    
+
     # USER INPUT AND COMMANDS
     # Cmd commands
     def do_atk(self, arg):

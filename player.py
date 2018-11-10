@@ -50,4 +50,3 @@ class Player(Monster):
         for enemy in enemies:
             enemy.hp -= ac_dicts.SKILLS['ARROW_STORM']['dmg']
             enemy.update_data()
-            

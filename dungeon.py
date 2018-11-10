@@ -29,7 +29,7 @@ class Dungeon(cmd.Cmd):
     # (go)
     EMPTY_DIR = 'There is nothing found miles away towards'
     BAD_DIR = '''I dont think this direction can be found on any compass!
-Check these, perhaps? NORTH/SOUTH/EAST/WEST or UP/DOWN'''
+                 Check these, perhaps? NORTH/SOUTH/EAST/WEST or UP/DOWN'''
     NO_DIR_GIVEN = 'Please tell me where do you want me go! e.g. "go north"'
     NO_UP = "You can't climb UP, and I don't believe you can fly anyway!"
     NO_DOWN = "There is no secret staircase DOWN here, except if you are good at digging!"
@@ -60,7 +60,7 @@ Check these, perhaps? NORTH/SOUTH/EAST/WEST or UP/DOWN'''
         self.intro = input(banner('. . . Welcome to ASCII Combat . . .\n. . . Press Enter to Continue . . .'))
         self.prompt = self.PROMPT_SIGN + self.PROMPT_MSG
         self.INV_INTRO = "[{}'s {}]".format(self.player.name, self.INV_INTRO)
-    
+
     # cmd.Cmd functions overriding
     # Avoids repitition of last command
     def emptyline(self):
@@ -70,7 +70,7 @@ Check these, perhaps? NORTH/SOUTH/EAST/WEST or UP/DOWN'''
     def default(self, line):
         self.display_current_room()
         self.error_msg('"{}"!? {}'.format(line, self.UNKNOWN_CMD))
-    
+
     # Removes the help method
     def do_help(self, arg):
         self.display_current_room()
@@ -122,7 +122,7 @@ Check these, perhaps? NORTH/SOUTH/EAST/WEST or UP/DOWN'''
             _text = textwrap.wrap(text, self.SCREEN_WIDTH - len(self.PROMPT_SIGN))
             for line in _text:
                 print(self.PROMPT_SIGN + line)
-        else: 
+        else:
             print(self.PROMPT_SIGN + text)
         self.reset_color()
 
@@ -147,7 +147,7 @@ Check these, perhaps? NORTH/SOUTH/EAST/WEST or UP/DOWN'''
             print('{}{}{}| {}{}'.format(C.Fore.MAGENTA, k.upper(), (5 - len(k)) * ' ', C.Fore.CYAN, v))
         print()
         self.reset_color()
-    
+
     # Prints user info
     def display_player_info(self):
         p = self.player
@@ -162,8 +162,8 @@ Check these, perhaps? NORTH/SOUTH/EAST/WEST or UP/DOWN'''
         # Printing colored stats
         c_user_stats = "{}[{}] {}[HP] {}/{} {}[Weapon] {} {}[Skill] {} {}[Coins] {}".format(
         C.Fore.CYAN, p.name,
-        C.Fore.GREEN, p.hp, p.max_hp, 
-        C.Fore.RED, p.weapon, 
+        C.Fore.GREEN, p.hp, p.max_hp,
+        C.Fore.RED, p.weapon,
         C.Fore.MAGENTA, p.skill_type[NAME],
         C.Fore.YELLOW, self.coins)
         print(' \{}| {}{} {}'.format('_' * EXTENSION, c_user_stats, C.Fore.WHITE, '|____/'))
@@ -192,7 +192,7 @@ Check these, perhaps? NORTH/SOUTH/EAST/WEST or UP/DOWN'''
         random_tag  = CYAN + 'Random | '
         for item_name in item_names:
         # If that item got already displayed dont print second ocurrences
-            if item_name in displayed_items: 
+            if item_name in displayed_items:
                 pass
             else:
                 item_count = item_names.count(item_name)
@@ -200,7 +200,7 @@ Check these, perhaps? NORTH/SOUTH/EAST/WEST or UP/DOWN'''
                 # Prints item count if there is more than one of that item
                 if item_count == 1:
                     x = item[NAME]
-                elif item_count > 1:       
+                elif item_count > 1:
                     x = '{} ({})'.format(item[NAME], item_count)
                 # Highlights item name if it just got picked last turn
                 if item_name == self.last_item_picked:
@@ -233,7 +233,7 @@ Check these, perhaps? NORTH/SOUTH/EAST/WEST or UP/DOWN'''
         print(_random[0])
         _random.remove(_random[0])
         for line in _random:
-            print(' ' * l + line)      
+            print(' ' * l + line)
         print()
 
     # Prints an ASCII map of all rooms
@@ -275,7 +275,7 @@ Check these, perhaps? NORTH/SOUTH/EAST/WEST or UP/DOWN'''
         elif arg.lower() not in DIRECTIONS:
             self.display_current_room()
             self.error_msg(self.BAD_DIR)
-    
+
     # Look at something (Display its LONGDESC)
     def do_look(self, arg):
         current_room = ROOMS[self.location]
@@ -295,8 +295,8 @@ Check these, perhaps? NORTH/SOUTH/EAST/WEST or UP/DOWN'''
             else:
                 self.display_current_room()
                 self.error_msg('"{}"{}'.format(arg, self.UNKNOWN_ITEM))
-            
-    
+
+
     # Pick an item (Remove it from ROOM[GROUND] add it to self.inventory)
     def do_pick(self, arg):
         current_room = ROOMS[self.location]
@@ -330,7 +330,7 @@ Check these, perhaps? NORTH/SOUTH/EAST/WEST or UP/DOWN'''
                 self.display_current_room()
                 self.error_msg('"{}"{}'.format(arg, self.UNKNOWN_ITEM))
 
-    
+
     # Eat an item (Remove it from invetory)
     def do_eat(self, arg):
         # If input is found in inventory
