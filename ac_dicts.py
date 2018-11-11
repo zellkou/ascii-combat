@@ -87,6 +87,7 @@ WEAPONS = {
     FIST   :  ['Fist',   1,   'punched'],
     DAGGER :  ['Dagger', 2,   'stabbed'],
     SWORD  :  ['Sword',  3, 'sliced at'],
+    BOW    :  ['Bow',    3,   'shot at'],
 }
 
 '''
@@ -252,6 +253,37 @@ ITEMS = {
         PICKABLE: True,
         EDIBLE: False,
         TAG: 'coins',
+    }
+    'sword': {
+        NAME: 'Sword',
+        GROUNDDESC: ['An old', 'is laying on the ground'],
+        SHORTDESC: 'An old battered Sword',
+        LONGDESC: 'This sword is old and battered but is still better than a dagger',
+        PICKABLE: True,
+        EDIBLE: False,
+        WEAPON: WEAPONS[SWORD],
+        TAG: 'weapon',
+    }
+    'meat': {
+        NAME: 'Meat',
+        GROUNDDESC: ['Some', 'on the ground'],
+        SHORTDESC: 'Dried Meat',
+        LONGDESC: 'Dried Meat of some unknown animal',
+        PICKABLE: True,
+        EDIBLE: True,
+        Price: 8,
+        Tag: 'food',
+    }
+    'bow': {
+        NAME: 'Long Bow',
+        GROUNDDESC: ['A nice', 'is layingon the ground'],
+        SHORTDESC: 'A long bow',
+        LONGDESC: 'A durable handmade long bow',
+        PICKABLE: True,
+        EDIBLE: False,
+        Price: 10,
+        WEAPON: WEAPONS[BOW],
+        Tag: 'weapon',
     }
 }
 
