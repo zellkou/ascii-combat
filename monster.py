@@ -80,7 +80,7 @@ class Monster:
                 else:
                     no_variation = self.name.split(' ', 1)
                     self.name = no_variation[1]
-                    self.name = '{} {}'.format('Dead', self.name)              
+                    self.name = '{} {}'.format('Dead', self.name)
         if self.max_hp + 4 > len(self.name) + 1:
             self.length = self.max_hp + 4
         else:

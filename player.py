@@ -29,7 +29,8 @@ class Player(Monster):
         print(C.Fore.MAGENTA + '>', self.name)
         if self.alive:
             print(C.Fore.MAGENTA + '* HP     |' + C.Fore.CYAN + '{}/{}'.format(self.hp, self.max_hp))
-        print(C.Fore.MAGENTA + '* Weapon |' + C.Fore.CYAN + '{} (DMG: {})'.format(self.weapon, self.dmg))
+        print(C.Fore.MAGENTA + '* Weapon |' + C.Fore.CYAN + '{} (DMG: {})'
+              .format(self.weapon, self.dmg))
         print(C.Fore.MAGENTA + '* Skill  |' + C.Fore.CYAN + '{}'.format(self.skill_type['name']))
         pwr_string = C.Fore.MAGENTA + '* Power  |' + C.Fore.CYAN + ('●' * self.skill) + 'o' * (self.max_skill - self.skill)
         if self.skill == self.max_skill:
@@ -50,4 +51,3 @@ class Player(Monster):
         for enemy in enemies:
             enemy.hp -= ac_dicts.SKILLS['ARROW_STORM']['dmg']
             enemy.update_data()
-            

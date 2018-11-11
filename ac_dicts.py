@@ -1,17 +1,17 @@
 '''
 This contains multiple dictionaries of different enemies, weapons, and so on
 '''
+from random import choice
 from monster import Monster
 from player import Player
-from random import choice
 import colorama as C
 
 # Damage to be used for skills usually equals to player's current dmg
-initial_dmg = 0
+INITIAL_DMG = 0
 
 # Constants
 # This is the list of tags to be displayed in inventory
-INVENTORY_TAGS = ['food', 'weapon', 'armor'] 
+INVENTORY_TAGS = ['food', 'weapon', 'armor']
 
 # Text constants
 BULLET = '  > '
@@ -28,6 +28,7 @@ DIM = C.Style.NORMAL
 FIST = 'fist'
 DAGGER = 'dagger'
 SWORD = 'sword'
+BOW = 'bow'
 # Rooms/items dict keys
 NAME = 'name'
 USERDESC = 'userdesc'
@@ -54,7 +55,7 @@ TAG = 'tag' # Tags can be food, weapon, random, decor
 # DATA DICTIONARIES
 MONSTER_VARIATION = ['Ruthless', 'Ferocious', 'Demonic',
                      'Brutal', 'Bloody', 'Violent', 'Wild', 'Spooky',
-                     'Murderous', 'Fierce', 'Savage', 'Monsterous', 
+                     'Murderous', 'Fierce', 'Savage', 'Monsterous',
                      'Hideous', 'Grotesque',
                     ]
 
@@ -83,39 +84,40 @@ Stores of weapons and their equivalent dmg, weapon names
 start with a capital letter
 '''
 WEAPONS = {
-#                NAME ----> DMG --> VERB
+    #           NAME --> DMG --> VERB
     FIST   :  ['Fist',   1,   'punched'],
     DAGGER :  ['Dagger', 2,   'stabbed'],
     SWORD  :  ['Sword',  3, 'sliced at'],
+    BOW    :  ['Bow',    1,   'shot at'],
 }
 
 '''
 Stores player skills
 '''
 SKILLS = {
-        'NONE': {
-            'name'    : 'None',
+    'NONE': {
+        'name'    : 'None',},
+    'DOUBLE_TROUBLE': {
+        'name'    : 'Double Trouble',
+        'function': Player.double_trouble,
+        'message' : 'twice in quick succession',
+        'dmg'     : None,
+        'ismulti' : False,
         },
-        'DOUBLE_TROUBLE': {
-            'name'    : 'Double Trouble',
-            'function': Player.double_trouble,
-            'message' : 'twice in quick succession',
-            'dmg'     : None,
-            'ismulti' : False,
-        },
-        'ARROW_STORM': {
-            'name'    : 'Arrow Storm',
-            'function': Player.arrow_storm,
-            'message' : 'You throw deadly arrows on all enemies',
-            'dmg'     : 2,
-            'ismulti' : True,
+    'ARROW_STORM': {
+        'name'    : 'Arrow Storm',
+        'function': Player.arrow_storm,
+        'message' : 'You throw deadly arrows on all enemies',
+        'dmg'     : 2,
+        'ismulti' : True,
         },
     }
 
 ROOMS = {
     'town_square': {
         NAME: 'Town Square',
-        USERDESC: 'You are in the middle of the square, with streets surrounding you from all directions',
+        USERDESC: '''You are in the middle of the square, with streets
+                     surrounding you from all directions''',
         DESC: 'There is many people around, they all seem busy',
         NORTH: None,
         SOUTH: 'butchery',
@@ -167,7 +169,8 @@ ROOMS = {
     },
     'butchery': {
         NAME: 'Butchery',
-        USERDESC: "You are at the Butchery's entrance, You observe an old man as he sharpens his knife",
+        USERDESC: '''You are at the Butchery's entrance, You observe an old man
+                     as he sharpens his knife''',
         DESC: 'The air smells of meat and blood, It is unclean and stinky',
         NORTH: 'town_square',
         SOUTH: None,
@@ -205,7 +208,8 @@ ITEMS = {
         NAME: 'Cake',
         GROUNDDESC: ['A lovely vanilla', 'is inside a box placed on ground'],
         SHORTDESC: 'a tasty vanilla cake',
-        LONGDESC: 'This delicious treat was baked with love at the Grand Bakery, made from authentic vanilla and chocochips',
+        LONGDESC: '''This delicious treat was baked with lover at the Grand
+                     Bakery, made from authentic vanilla and chocochips''',
         PICKABLE: True,
         PRICE: 20,
         EDIBLE: True,
@@ -234,7 +238,8 @@ ITEMS = {
         NAME: 'Dagger',
         GROUNDDESC: ['A rusty', 'is thrown on the ground'],
         SHORTDESC: 'a rusty, old dagger',
-        LONGDESC: 'This dagger, ancient and rusty as it is, is still sharp enough to be used as a weapon.',
+        LONGDESC: '''This dagger, ancient and rusty as it is, is still sharp enough
+                     to be used as a weapon.''',
         PICKABLE: True,
         EDIBLE: False,
         WEAPON: WEAPONS[DAGGER],
@@ -244,15 +249,47 @@ ITEMS = {
         NAME: 'Coin',
         GROUNDDESC: ['A bronze', 'is dropped on the ground'],
         SHORTDESC: 'a bronze coin',
-        LONGDESC: "This is a bronze coin, You can spend it at any shop in exchange for useful goods",
+        LONGDESC: '''This is a bronze coin, You can spend it at any shop in exchange
+                     for useful goods''',
         PICKABLE: True,
         EDIBLE: False,
         TAG: 'coins',
     }
+    'sword': {
+        NAME: 'Sword',
+        GROUNDDESC: ['An old', 'is laying on the ground'],
+        SHORTDESC: 'An old battered Sword',
+        LONGDESC: 'This sword is old and battered but is still better than a dagger',
+        PICKABLE: True,
+        EDIBLE: False,
+        WEAPON: WEAPONS[SWORD],
+        TAG: 'weapon',
+    }
+    'meat': {
+        NAME: 'Meat',
+        GROUNDDESC: ['Some', 'on the ground'],
+        SHORTDESC: 'Dried Meat',
+        LONGDESC: 'Dried Meat of some unknown animal',
+        PICKABLE: True,
+        EDIBLE: True,
+        Price: 8,
+        Tag: 'food',
+    }
+    'bow': {
+        NAME: 'Long Bow',
+        GROUNDDESC: ['A nice', 'is layingon the ground'],
+        SHORTDESC: 'A long bow',
+        LONGDESC: 'A durable handmade long bow',
+        PICKABLE: True,
+        EDIBLE: False,
+        Price: 10,
+        WEAPON: WEAPONS[BOW],
+        Tag: 'weapon',
+    }
 }
 
 def set_skills_dmg():
-    SKILLS['DOUBLE_TROUBLE']['dmg'] = initial_dmg * 2
+    SKILLS['DOUBLE_TROUBLE']['dmg'] = INITIAL_DMG * 2
     SKILLS['ARROW_STORM']['dmg'] = 2
 
 # ASCII FUNCTIONS
@@ -283,21 +320,21 @@ def use_an(text):
 
 # EXTRACTOR FUNCTIONS
 def give_monster(specie, use_special_name=False):
-    mySpecieStats = MONSTER_SPECIES[specie]
-    x = Monster(mySpecieStats[0], mySpecieStats[1], mySpecieStats[2], mySpecieStats[3])
+    my_specie_stats = MONSTER_SPECIES[specie]
+    x = Monster(my_specie_stats[0], my_specie_stats[1], my_specie_stats[2], my_specie_stats[3])
     if use_special_name:
         # Generating a name using MONSTER_VARIATION
         adjective = choice(MONSTER_VARIATION)
         MONSTER_VARIATION.remove(adjective)
-        x.name = '{} {}'.format(adjective,  x.name)
+        x.name = '{} {}'.format(adjective, x.name)
     return x
 
 # Returns rooms exits as a dictionary of {DIRECTION: DESTINATION, ...}
 def get_room_exits(room):
     exits = {}
-    for dir in DIRECTIONS:
-        if room[dir]:
-            exits[dir] = ROOMS[room[dir]][NAME]
+    for direct in DIRECTIONS:
+        if room[direct]:
+            exits[direct] = ROOMS[room[direct]][NAME]
         else:
             pass
             # exits[dir] = str(None)
@@ -310,8 +347,8 @@ def get_items_grounddesc(room, item_look=None):
         item = ITEMS[item_name]
         # Add item GROUNDDESC to be displayed
         text += '{} {} {}'.format(BULLET + item[GROUNDDESC][0],
-        HIGHLIGHT_COLOR + item[NAME].lower() + WHITE,
-        item[GROUNDDESC][1] + '\n')
+                                  HIGHLIGHT_COLOR + item[NAME].lower() + WHITE,
+                                  item[GROUNDDESC][1] + '\n')
     return text
 
 # Returns items SHORTDESC as bullet points

@@ -9,10 +9,10 @@ def test1():
         ms.append(m)
 
     for i in ms:
-        print(i.name)    
+        print(i.name)
 
 # Name strip test
-def test2():    
+def test2():
     mystring = 'ferocious Bear'
     if not mystring.startswith('Dead'):
         if len(mystring.split(' ')) < 2:
@@ -22,7 +22,7 @@ def test2():
             print(no_variation)
             mystring = no_variation[1]
             print(mystring)
-            mystring = '{} {}'.format('Dead', mystring)    
+            mystring = '{} {}'.format('Dead', mystring)
     print(mystring)
 
 var = 2
