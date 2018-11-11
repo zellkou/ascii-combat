@@ -28,6 +28,7 @@ DIM = C.Style.NORMAL
 FIST = 'fist'
 DAGGER = 'dagger'
 SWORD = 'sword'
+BOW = 'bow'
 # Rooms/items dict keys
 NAME = 'name'
 USERDESC = 'userdesc'
@@ -87,7 +88,7 @@ WEAPONS = {
     FIST   :  ['Fist',   1,   'punched'],
     DAGGER :  ['Dagger', 2,   'stabbed'],
     SWORD  :  ['Sword',  3, 'sliced at'],
-    BOW    :  ['Bow',    3,   'shot at'],
+    BOW    :  ['Bow',    1,   'shot at'],
 }
 
 '''
