@@ -1,6 +1,11 @@
-from ac_dicts import *
-import player, combat, cmd, platform, os, textwrap
+import cmd
+import textwrap
+import platform
+import os
+import combat
+import player
 import colorama as C
+from ac_dicts import *
 
 class Dungeon(cmd.Cmd):
 
@@ -15,7 +20,7 @@ class Dungeon(cmd.Cmd):
     PROMPT_SIGN = '# '
 
     # String constants used for user interaction, They are supposed to be written
-    # in First-Person, some strings are placed in a list for those scenarios: 
+    # in First-Person, some strings are placed in a list for those scenarios:
     # 1. An item name will be inserted in the middle
     # 2. Multiple versions of same context to add variety to the dialogue (Nobody likes repitition)
     # main loop
@@ -43,10 +48,10 @@ class Dungeon(cmd.Cmd):
     BAD_FOOD = "would be delicious, unfortunately I don't have one"
     NO_ITEM_GIVEN_EAT = 'I would like to eat, but what should I eat!? e.g. "eat apple"'
     NOT_EDIBLE = [
-    ['They call me "Shark Teeth", but still this', 'is too hard for me to eat'],
-    ['I might suffocate eating this', ''],
-    ['Only a mad person would eat a', 'gladly I am not that guy'],
-    ['I am not sure if this', 'is edible, better not try']
+        ['They call me "Shark Teeth", but still this', 'is too hard for me to eat'],
+        ['I might suffocate eating this', ''],
+        ['Only a mad person would eat a', 'gladly I am not that guy'],
+        ['I am not sure if this', 'is edible, better not try']
     ]
     SWALLOW_SYNONYMS = ['consume', 'devour', 'gulp down', 'eat', 'swallow', 'feast on']
 
@@ -57,7 +62,8 @@ class Dungeon(cmd.Cmd):
         self.reset_color()
         self.player = player
         self.rooms = rooms
-        self.intro = input(banner('. . . Welcome to ASCII Combat . . .\n. . . Press Enter to Continue . . .'))
+        self.intro = input(banner('''. . . Welcome to ASCII Combat . . .\n. . .
+                                  Press Enter to Continue . . .'''))
         self.prompt = self.PROMPT_SIGN + self.PROMPT_MSG
         self.INV_INTRO = "[{}'s {}]".format(self.player.name, self.INV_INTRO)
 
@@ -96,11 +102,11 @@ class Dungeon(cmd.Cmd):
 
     @staticmethod
     def reset_color():
-        print(C.Back.BLACK + C.Fore.WHITE + C.Style.BRIGHT, end='')
+        print(str(C.Back.BLACK + C.Fore.WHITE + C.Style.BRIGHT, end=''))
 
     @staticmethod
     def clear():
-        print(C.Style.BRIGHT + C.Back.BLACK + C.Fore.WHITE, end='')
+        print(str(C.Style.BRIGHT + C.Back.BLACK + C.Fore.WHITE, end=''))
         if platform.system() == 'Windows':
             os.system('cls')
         elif platform.system() == 'Linux' or platform.system() == 'Darwin':
@@ -109,7 +115,7 @@ class Dungeon(cmd.Cmd):
     # Displays an error prompt, supports multi-line prompts
     def error_msg(self, text):
         self.display_current_room()
-        print(C.Fore.RED, end='')
+        print(str(C.Fore.RED, end=''))
         _text = text.split('\n')
         for line in _text:
             print(self.PROMPT_SIGN + line)
@@ -117,7 +123,7 @@ class Dungeon(cmd.Cmd):
 
     # Displays an achievement/notification, supports multi-line prompts
     def achieve_msg(self, text, wrap=False):
-        print(C.Back.BLUE + C.Fore.CYAN, end='')
+        print(str(C.Back.BLUE + C.Fore.CYAN, end=''))
         if wrap:
             _text = textwrap.wrap(text, self.SCREEN_WIDTH - len(self.PROMPT_SIGN))
             for line in _text:
@@ -132,7 +138,7 @@ class Dungeon(cmd.Cmd):
         self.display_player_info()
         # Displays room description
         current_room = ROOMS[self.location]
-        print(C.Fore.YELLOW, end='')
+        print(str(C.Fore.YELLOW, end=''))
         print(banner(current_room[NAME], border='~'))
         self.reset_color()
         room_desc = self.PROMPT_SIGN + current_room[USERDESC] + '. ' + current_room[DESC]
@@ -144,7 +150,8 @@ class Dungeon(cmd.Cmd):
         print(get_items_grounddesc(current_room))
         # Displays exits with colors
         for k, v in get_room_exits(current_room).items():
-            print('{}{}{}| {}{}'.format(C.Fore.MAGENTA, k.upper(), (5 - len(k)) * ' ', C.Fore.CYAN, v))
+            print('{}{}{}| {}{}'.format(C.Fore.MAGENTA, k.upper(), (5 - len(k)) * ' ',
+                                        C.Fore.CYAN, v))
         print()
         self.reset_color()
 
@@ -155,17 +162,17 @@ class Dungeon(cmd.Cmd):
         # deals with ANSI escape sequences as an actual string (while it is not actually
         # seen by the user) so this is a simple workaround
         EXTENSION = 1 # This controls how long the left handle for the banner is
-        x = 5 + len("[{}] [HP] {}/{}[Weapon] {}[Skill] {}[Coins] {}".format(p.name, p.hp, p.max_hp,
-        p.weapon, p.skill_type[NAME], self.coins))
+        x = 5 + len("[{}] [HP] {}/{}[Weapon] {}[Skill] {}[Coins] {}".
+                    format(p.name, p.hp, p.max_hp, p.weapon, p.skill_type[NAME], self.coins))
         # Printing top border
         print('\{}┌{}┐     /'.format(' ' * (EXTENSION + 1), '-' * x))
         # Printing colored stats
         c_user_stats = "{}[{}] {}[HP] {}/{} {}[Weapon] {} {}[Skill] {} {}[Coins] {}".format(
-        C.Fore.CYAN, p.name,
-        C.Fore.GREEN, p.hp, p.max_hp,
-        C.Fore.RED, p.weapon,
-        C.Fore.MAGENTA, p.skill_type[NAME],
-        C.Fore.YELLOW, self.coins)
+            C.Fore.CYAN, p.name,
+            C.Fore.GREEN, p.hp, p.max_hp,
+            C.Fore.RED, p.weapon,
+            C.Fore.MAGENTA, p.skill_type[NAME],
+            C.Fore.YELLOW, self.coins)
         print(' \{}| {}{} {}'.format('_' * EXTENSION, c_user_stats, C.Fore.WHITE, '|____/'))
         # Print bot border
         print(' ' * (EXTENSION + 2) + '└' + '-' * x + '┘')
@@ -187,9 +194,9 @@ class Dungeon(cmd.Cmd):
     def sort_inventory_items(self, item_names):
         l = 9 # Length of 'Name  | ' to be used as indent
         displayed_items = []
-        food_tag   = CYAN + 'Food   | '
+        food_tag = CYAN + 'Food   | '
         weapon_tag = CYAN + 'Weapons| '
-        random_tag  = CYAN + 'Random | '
+        random_tag = CYAN + 'Random | '
         for item_name in item_names:
         # If that item got already displayed dont print second ocurrences
             if item_name in displayed_items:
@@ -241,25 +248,25 @@ class Dungeon(cmd.Cmd):
         pass
 
     # Follows a given direction to move from current location to a new location
-    def go_new_location(self, input):
+    def go_new_location(self, inp):
         current_room = ROOMS[self.location]
         # Checks all DIRECTIONS, comparing them to user input
-        for dir in DIRECTIONS:
+        for direct in DIRECTIONS:
             # If the DESTINATION is available, move to it
-            if current_room[dir] and dir == input.lower():
-                self.location = current_room[dir]
+            if current_room[direct] and direct == inp.lower():
+                self.location = current_room[direct]
                 self.display_current_room()
             # If the DESTINATION is empty
-            elif dir == input.lower() and not current_room[dir]:
+            elif direct == inp.lower() and not current_room[direct]:
                 self.display_current_room()
                 # Customized messages for CLIMBING/DESCENDING no destination
-                if dir == UP:
+                if direct == UP:
                     self.error_msg(self.NO_UP)
-                elif dir == DOWN:
+                elif direct == DOWN:
                     self.error_msg(self.NO_DOWN)
                 # N/S/E/W
                 else:
-                    self.error_msg('{} {}'.format(self.EMPTY_DIR, dir.upper()))
+                    self.error_msg('{} {}'.format(self.EMPTY_DIR, direct.upper()))
 
     # Cmd commands
     # Navigate in a specific direction
@@ -283,7 +290,7 @@ class Dungeon(cmd.Cmd):
         if arg.lower() in current_room[GROUND]:
             item = ITEMS[arg.lower()]
             self.display_current_room()
-            self.achieve_msg(item[LONGDESC], wrap = True)
+            self.achieve_msg(item[LONGDESC], wrap=True)
         # Empty input
         elif not arg:
             self.display_current_room()
@@ -312,12 +319,13 @@ class Dungeon(cmd.Cmd):
                 self.last_item_picked = item[NAME].lower()
                 self.display_current_room()
                 self.achieve_msg('{} {} {}'.format(self.PICK_ITEM[0],
-                HIGHLIGHT_COLOR + item[NAME].lower() + CYAN,
-                self.PICK_ITEM[1]))
+                                                   HIGHLIGHT_COLOR + item[NAME].lower() + CYAN,
+                                                   self.PICK_ITEM[1]))
             else:
                 self.display_current_room()
                 self.error_msg('{} {} {}'.format(self.NOT_PICKABLE[0],
-                HIGHLIGHT_COLOR + item[NAME].lower() + C.Fore.RED, self.NOT_PICKABLE[1]))
+                                                 HIGHLIGHT_COLOR + item[NAME].lower() +
+                                                 C.Fore.RED, self.NOT_PICKABLE[1]))
         # Empty input
         elif not arg:
             self.display_current_room()
@@ -346,7 +354,8 @@ class Dungeon(cmd.Cmd):
                 # Prints a funny prompt if item is not edible
                 s = choice(self.NOT_EDIBLE)
                 self.display_current_room()
-                self.achieve_msg(s[0] + ' {}{}{} '.format(HIGHLIGHT_COLOR, arg.lower(), CYAN) + s[1])
+                self.achieve_msg(s[0] + ' {}{}{} '.format(HIGHLIGHT_COLOR, arg.lower(),
+                                                          CYAN) + s[1])
         # Empty input
         elif not arg:
             self.display_current_room()
@@ -366,6 +375,6 @@ class Dungeon(cmd.Cmd):
                 self.error_msg('"{}"{}'.format(arg, self.UNKNOWN_ITEM))
 
 if __name__ == '__main__':
-    me = player.Player('Bori', 10, WEAPONS[DAGGER])
-    world = Dungeon(me, ROOMS)
-    world.cmdloop()
+    ME = player.Player('Bori', 10, WEAPONS[DAGGER])
+    WORLD = Dungeon(ME, ROOMS)
+    WORLD.cmdloop()

@@ -1,8 +1,10 @@
-from ac_dicts import *
+import os
+import platform
 import player
-import combat
 import dungeon
-import os, platform
+import monster
+import combat
+from ac_dicts.py import *
 
 SCREEN_WIDTH = 80
 SCREEN_HEIGHT = 30
