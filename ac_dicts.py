@@ -254,7 +254,7 @@ ITEMS = {
         PICKABLE: True,
         EDIBLE: False,
         TAG: 'coins',
-    }
+    },
     'sword': {
         NAME: 'Sword',
         GROUNDDESC: ['An old', 'is laying on the ground'],
@@ -264,7 +264,7 @@ ITEMS = {
         EDIBLE: False,
         WEAPON: WEAPONS[SWORD],
         TAG: 'weapon',
-    }
+    },
     'meat': {
         NAME: 'Meat',
         GROUNDDESC: ['Some', 'on the ground'],
@@ -272,9 +272,9 @@ ITEMS = {
         LONGDESC: 'Dried Meat of some unknown animal',
         PICKABLE: True,
         EDIBLE: True,
-        Price: 8,
-        Tag: 'food',
-    }
+        PRICE: 8,
+        TAG: 'food',
+    },
     'bow': {
         NAME: 'Long Bow',
         GROUNDDESC: ['A nice', 'is layingon the ground'],
@@ -282,9 +282,9 @@ ITEMS = {
         LONGDESC: 'A durable handmade long bow',
         PICKABLE: True,
         EDIBLE: False,
-        Price: 10,
+        PRICE: 10,
         WEAPON: WEAPONS[BOW],
-        Tag: 'weapon',
+        TAG: 'weapon',
     }
 }
 
